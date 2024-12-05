@@ -1,0 +1,21 @@
+<html> 
+    <head> 
+        <title>Verify OTP</title>
+    </head>
+<body>
+    <h1>Verify OTP</h1>
+    <form method='POST'>
+        <input type='text' name='OTP' placeholder='Enter OTP' required>
+        <button type='submit'>Verify</button>
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul>
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</body>
+</html> 
