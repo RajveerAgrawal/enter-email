@@ -1,12 +1,15 @@
-<html> 
-    <head> 
-        <title>Enter Email</title>
-    </head>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Enter Email</title>
+</head>
+
 <body>
-    <h1>Enter your email</h1>
-    <form method='POST'>
-        <input type='email' name='email' placeholder='Enter your email' required>
-        <button type='submit'>Send OTP</button>
+    <h1>Enter Your Email</h1>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <button type="submit">Send OTP</button>
     </form>
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -18,4 +21,5 @@
     {% endif %}
     {% endwith %}
 </body>
-</html> 
+
+</html>

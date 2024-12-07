@@ -9,42 +9,47 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config["MAIL_PORT"] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'jbcnrajveer@gmail.com'
-app.config['MAIL_PASSWORD'] = 'Rajveer@2009'
+app.config['MAIL_PASSWORD'] = 'ohky eijy joxr jlhj'
 
 mail = Mail(app)
 
-@app.route('/', methods=['GET', 'POST'])
+# Route to get user's email
+@app.route("/", methods=["GET", "POST"])
 def enter_email():
-    if request.method == 'POST':
-        email = request.form['email']
+    if request.method == "POST":
+        email = request.form["email"]
         otp = random.randint(100000, 999999)
-        session['otp'] = otp
-        session['email'] = email
-        
+        session["otp"] = otp
+        session["email"] = email
+
+        # Send OTP to the user's email
         try:
-            msg = Message('Your OTP', sender='jbcnrajveer@gmail.com', recipients=[email])
-            msg.body = f'Your OTP is {otp}'
+            msg = Message("Your OTP", sender="thangamanivkl@gmail.com", recipients=[email])
+            msg.body = f"Your OTP is {otp}"
             mail.send(msg)
-            flash('OTP sent to your email!', 'success')
-            return redirect(url_for('verifyotp'))
+            flash("OTP sent to your email!", "success")
+            return redirect(url_for("verify_otp"))
         except Exception as e:
-            flash('Failed to send email. Please try again.', 'danger')
+            flash("Failed to send email. Please try again.", "danger")
             print(e)
-            
-            return render_template('enter_email.html')
-        
-@app.route('/verify', methods=['GET', 'POST'])
+
+    return render_template("enter_email.html")
+
+
+# Route to verify the OTP
+@app.route("/verify", methods=["GET", "POST"])
 def verify_otp():
-    if request.method == 'POST':
-        entered_otp = request.form['otp']
-        if int(entered_otp) == session.get('otp'):
-            flash('Email verified successfully!', 'success')
-            return redirect(url_for('enter_email'))
+    if request.method == "POST":
+        entered_otp = request.form["otp"]
+        if int(entered_otp) == session.get("otp"):
+            flash("Email verified successfully!", "success")
+            return redirect(url_for("enter_email"))  # Redirect or any success action
         else:
-            flash('Invalid OTP. Please try again later.', 'danger')
-            return redirect(url_for('verifyotp'))
-        
-        return render_template('verifyotp.html')
-    
-if __name__ == '__main__':
+            flash("Invalid OTP. Please try again.", "danger")
+            return redirect(url_for("verify_otp"))
+
+    return render_template("verify_otp.html")
+
+
+if __name__ == "__main__":
     app.run(debug=True)
